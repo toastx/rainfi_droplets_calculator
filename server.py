@@ -12,6 +12,9 @@ BORROWING_DROPLET = 3
 @app.route('/droplets', methods=["GET"])
 def user_droplets():
     pubkey = request.args.get('pubkey')
+    if pubkey == None:
+        return "Send proper pubkey"
+    
     token_list = _fetch_price_feed()
 
     borrow_droplets  = borrow_droplets_count(pubkey=pubkey, token_list= token_list)
