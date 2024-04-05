@@ -99,5 +99,3 @@ def _fetch_pool_pubkey(pubkey):
 def index():
     return app.send_static_file('droplets.html')
 
-
-app.run()
