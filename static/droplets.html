@@ -3,33 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Droplets Form</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+    <title>RainFi Droplets Calculator</title>
 </head>
 <body>
-    <h1>User Droplets Form</h1>
+    <h1>RainFi Droplets Calculator</h1>
+    <h2>Enter your rainfi address to view your
+        daily accuring droplets*
+    </h2>
+    <h3>Estimated droplets are subjected to change as per the asset's price action</h3>
+
     <form id="dropletsForm">
         <label for="pubkey">Enter Public Key:</label><br>
-        <input type="text" id="pubkey" name="pubkey"><br><br>
-        <input type="submit" value="Submit">
+        <input class = "addressinput" type="text" id="pubkey" name="pubkey"><br><br>
+        <input class = "s-button" type="submit" value="Submit">
     </form>
 
-    <div id="result"></div>
+    
+
+    
+    <div class = "result-div" id="result"></div>
 
     <script>
-        document.getElementById("dropletsForm").addEventListener("submit", function(event) {
+        document.getElementById("dropletsForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             var form = this;
             var pubkey = form.elements["pubkey"].value;
             var url = "/droplets?pubkey=" + encodeURIComponent(pubkey);
 
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("result").innerText = data;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            try {
+            const response = await fetch(url); // Wait for fetch call to complete
+            const data = await response.json(); // Wait for JSON parsing
+            // Show the result div
+            document.getElementById("result").style.display = "block";
+            // Access elements of JSON data and display them
+            if (data['Daily estimated droplets'] !== undefined) {
+                document.getElementById("result").innerText += "Daily estimated droplets: " + data['Daily estimated droplets'] + "\n";
+            }
+            if (data['Borrowing Droplets'] !== undefined) {
+                document.getElementById("result").innerText += "Borrowing Droplets: " + data['Borrowing Droplets'] + "\n";
+            }
+            if (data['Lending Droplets'] !== undefined) {
+                document.getElementById("result").innerText += "Lending Droplets: " + data['Lending Droplets'] + "\n";
+            }
+            } catch (error) {
+                console.error('Error:', error);
+    }
         });
     </script>
 </body>

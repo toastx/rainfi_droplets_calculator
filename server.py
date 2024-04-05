@@ -14,7 +14,7 @@ def user_droplets():
     pubkey = request.args.get('pubkey')
     if pubkey == None:
         return "Send proper pubkey"
-    
+
     token_list = _fetch_price_feed()
 
     borrow_droplets  = borrow_droplets_count(pubkey=pubkey, token_list= token_list)
@@ -38,7 +38,6 @@ def borrow_droplets_count(pubkey, token_list):
     stats = res["rain"]
 
     for i in stats:
-        print(i)
         if i in token_list["prices"]:
             price = token_list["prices"][i]
             decimals = token_list["decimals"][i]
@@ -69,7 +68,7 @@ def lender_droplets_count(pubkey, token_list):
     lending_droplets = (borrowed_amount/10**decimals) * price * LENDING_DROPLET
     non_lending_droplets = (available_amount/10**decimals) * price * NON_LENDING_DROPLET
 
-    _lender_droplets = float(round(lending_droplets + non_lending_droplets))
+    _lender_droplets = float(round(lending_droplets + non_lending_droplets,1))
     return _lender_droplets
 
 
@@ -102,3 +101,5 @@ def _fetch_pool_pubkey(pubkey):
 def index():
     return app.send_static_file('droplets.html')
 
+
+app.run()
