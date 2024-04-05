@@ -28,15 +28,17 @@
     <div class = "result-div" id="result"></div>
 
     <script>
-        document.getElementById("dropletsForm").addEventListener("submit", async function(event) {
+        document.getElementById("dropletsForm").addEventListener("submit", function(event) {
             event.preventDefault();
             var form = this;
             var pubkey = form.elements["pubkey"].value;
             var url = "/droplets?pubkey=" + encodeURIComponent(pubkey);
 
-            try {
-            const response = await fetch(url); // Wait for fetch call to complete
-            const data = await response.json(); // Wait for JSON parsing
+            fetch(url)
+        .then(function(response) {
+            return response.json(); // Parse response as JSON
+        })
+        .then(function(data) {
             // Show the result div
             document.getElementById("result").style.display = "block";
             // Access elements of JSON data and display them
@@ -49,9 +51,10 @@
             if (data['Lending Droplets'] !== undefined) {
                 document.getElementById("result").innerText += "Lending Droplets: " + data['Lending Droplets'] + "\n";
             }
-            } catch (error) {
-                console.error('Error:', error);
-    }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
         });
     </script>
 </body>
