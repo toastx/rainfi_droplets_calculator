@@ -1,4 +1,10 @@
-:root{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root{
 --night: rgb(15, 16, 15);
 --timberwolf: #dad7cdff;
 --ultra-violet: rgb(84, 87, 124);
@@ -88,15 +94,24 @@ label{
   box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
   transform: scale(1.05) rotate(-1deg);
 }
+    </style>
+    
+    <title>RainFi Droplets Calculator</title>
+</head>
+<body>
+    <h1>RainFi Droplets Calculator</h1>
+    <h2>Enter your rainfi address to view your
+        daily accuring droplets*
+    </h2>
+    <h3>Estimated droplets are subjected to change as per the asset's price action</h3>
 
 
-.result-div{
-    margin-top: 80px;
-    padding: 10px;
-    font-size: 18px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 800px;
-    text-align: center;
-    color: var(--timberwolf);
-    display: none;
-}
+    <form id="dropletsForm" action="/droplets" method="GET">
+        <label for="pubkey">Enter Public Key:</label><br>
+        <input class="addressinput" type="text" id="pubkey" name="pubkey"><br><br>
+        <input class="s-button" type="submit" value="Submit">
+    </form>
+
+</body>
+</html>
+
